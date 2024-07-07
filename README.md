@@ -27,5 +27,5 @@ docker run -v .:/workspace -it helix-editor
 Alternatively, you can pull and use the image directly from my Docker Hub:
 
 ```bash
-docker run -it patrickkoss/helix-editor
+docker run -it patrickkoss/helix-editor:v0.0.1
 ```
