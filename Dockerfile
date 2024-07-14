@@ -28,6 +28,14 @@ RUN GOBIN=/usr/local/bin go install golang.org/x/tools/gopls@latest
 RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /usr/local/bin v1.59.1
 RUN GOBIN=/usr/local/bin go install github.com/nametake/golangci-lint-langserver@latest
 
+# Install Zellij terminal multiplexer
+RUN cargo install --locked zellij
+
+# Set up the Zellij config directory
+RUN mkdir -p /root/.config/zellij
+ENV ZELLIJ_CONFIG_DIR="/root/.config/zellij"
+# TODO: Create a Zellij config file and copy it over
+
 # Install Helix editor
 RUN apt-get update && apt-get install -y software-properties-common &&  \
     add-apt-repository ppa:maveonair/helix-editor &&  \
@@ -50,8 +58,8 @@ RUN cp build/* /root/.config/helix/themes
 WORKDIR ..
 RUN rm -rf helix-themes
 
-COPY config.toml /root/.config/helix/config.toml
-COPY languages.toml /root/.config/helix/languages.toml
+COPY helix_config.toml /root/.config/helix/config.toml
+COPY helix_languages.toml /root/.config/helix/languages.toml
 
 RUN mkdir /workspace
 WORKDIR /workspace
